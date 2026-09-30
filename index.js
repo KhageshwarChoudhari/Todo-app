@@ -1,4 +1,4 @@
-let todos = [];
+let todos = JSON.parse(localStorage.getItem("todos")) || [];
 let editTodoId = null;
 const todoForm = document.querySelector("#todo-form");
 const todoInput = document.querySelector("#todo-input");
@@ -32,6 +32,7 @@ todoForm.addEventListener("submit", (e) => {
       }
       return todo;
     });
+    localStorage.setItem("todos", JSON.stringify(todos));
     editTodoId = null;
     formBtn.textContent = "Add";
     todoInput.value = "";
@@ -40,6 +41,7 @@ todoForm.addEventListener("submit", (e) => {
 
     let newTodo = { id: Date.now(), task: todotask, iscompleted: false };
     todos.push(newTodo);
+    localStorage.setItem("todos", JSON.stringify(todos));
     todoInput.value = "";
   }
   renderTodos();
@@ -90,6 +92,7 @@ todoList.addEventListener("click", (e) => {
       }
       return todo;
     });
+    localStorage.setItem("todos", JSON.stringify(todos));
     renderTodos();
   }
 });
@@ -98,7 +101,7 @@ function deleteTodo(id) {
   todos = todos.filter((todo) => {
     return todo.id !== Number(id);
   });
-
+  localStorage.setItem("todos", JSON.stringify(todos));
   renderTodos();
 }
 
